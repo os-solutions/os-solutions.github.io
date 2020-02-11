@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Homework: running and debugging xv6</title>
+</head>
+<body>
+<h1> Homework 1</h1>
+<p><b>Get familiar with xv6 (4 marks):</b> -1 for any missed turn-in</p>
+<p>
+(Sample Output)<br>
+<b>Turn In 1 :</b><br>
+$1 = 0x1840 "cat"<br>
+$2 = 0x1844 "README"<br>
+$3 = 0x0<br>
+<br>
+<b>Turn In 2:</b><br>
+(gdb) bt<br>
+#0  exec (path=0x1840 "cat", argv=0x8dfbeed0) at exec.c:12<br>
+#1  0x80105380 in sys_exec () at sysfile.c:419<br>
+#2  0x80104837 in syscall () at syscall.c:139<br>
+#3  0x801058b9 in trap (tf=0x8dfbefb4) at trap.c:43<br>
+#4  0x8010561f in alltraps () at trapasm.S:20<br>
+#5  0x8dfbefb4 in ?? ()<br>
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)<br>
+<br>
+<b>Turn In 3:</b><br>
+
+(gdb) l<br>
+414	      break;<br>
+415	    }<br>
+416	    if(fetchstr(uarg, &argv[i]) < 0)<br>
+417	      return -1;<br>
+418	  }<br>
+419	  return exec(path, argv);<br>
+420	}<br>
+421	<br>
+422	int<br>
+423	sys_pipe(void)<br>
+</p>
+
+<p><b>File descriptors (2 marks)</b><br>
+<br>
+Check the error file against the output file. If the two
+are same, then you should use dup(), else you should use a sequence of
+close()/open().
+<br>
+1 mark for each case<br>
+<p><b>System calls and processes (1 mark)</b></p>
+<ul>
+<li> Process hierarchy: 0.25 marks
+<li> ls -l /proc/pid-num/fd  : 0.25 marks
+<li> ls -l /proc/self/fd : 0.25 marks
+<li> strace output : 0.25 marks
+</ul>
+
+<p> <b>Signal Handler (1 mark)</b> </p>
+solution :<br>
+<br><code>
+void handle_sig(int sig)<br> 
+{ <br>
+    printf("Hello");<br> 
+} <br>
+<br>
+int main()<br>
+{ <br>
+    signal(SIGINT, handle_sig); <br>
+    while (1) ; <br>
+} </code><br>
+<br>
+<b>Threads (4 marks)</b><br>
+<br>
+Use the <code>setitimer/alarm</code> function to tell the OS to deliver a SIGALRM after a time interval.<br>
+You should set-up a signal handler for SIGALRM.<br>
+<br>
+signal_handler:<br>
+&emsp;save the current thread<br>
+&emsp;select and load the new thread based on scheduling algorithm (round robin)<br>
+&emsp;set timer again using <code>setitimer/alarm</code><br>
+<br>
+If not used the correct function or used them in a wrong way then -1.5<br>
+<br>
+<br>
+</body>
+</html>
